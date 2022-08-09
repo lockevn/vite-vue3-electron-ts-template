@@ -5,16 +5,14 @@ import HelloWorld from "./components/HelloWorld.vue";
 </script>
 
 <template>
-  <img alt="Vue logo" width="120" src="./assets/vite.svg" />
-  <img alt="Vue logo" width="120" src="./assets/logo.png" />
-  <img alt="Vue logo" width="120" src="./assets/electron.png" />
-  <img alt="Vue logo" width="120" src="./assets/ts.png" />
-  <HelloWorld msg="Hello Vite + Vue 3 + Electron + TypeScript Thach" />
+  <img alt="FXCE" width="120" src="./assets/vite.svg" />
+  <img alt="GeneFx" width="120" src="./assets/logo.png" />
+  <HelloWorld msg="XCapital Fx Asset Management" />
 </template>
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: Lora, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
