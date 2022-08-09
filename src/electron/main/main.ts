@@ -45,3 +45,18 @@ app.on("window-all-closed", () => {
     app.quit();
   }
 });
+
+import puppeteer from "puppeteer";
+
+(async () => {
+  console.log("puppeteer start");
+
+  const browser = await puppeteer.launch();
+  const page = await browser.newPage();
+  await page.goto("https://genefx.com");
+  await page.screenshot({ path: "./example.png" });
+
+  console.log("puppeteer done");
+
+  await browser.close();
+})();

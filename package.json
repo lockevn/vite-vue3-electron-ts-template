@@ -50,6 +50,7 @@
     }
   },
   "dependencies": {
+    "puppeteer": "^16.1.0",
     "vue": "^3.2.25"
   },
   "devDependencies": {
