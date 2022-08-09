@@ -1,5 +1,7 @@
 # Vite+Vue3+Electron+Typescript template
 
+Clone from https://vuejsexamples.com/vite-vue3-electron-typescript-template/
+
 ![screenshot](./src/assets/screenshot.png)
 
 ## Get Started
@@ -42,55 +44,50 @@ npm install --save-dev electron@latest electron-builder concurrently
 
 ```ts {main.ts}
 // src/electron/main/main.ts
-import { join } from 'path';
-import {
-    app,
-    BrowserWindow
-} from 'electron';
+import { join } from "path";
+import { app, BrowserWindow } from "electron";
 
 const isDev = process.env.npm_lifecycle_event === "app:dev" ? true : false;
 
 function createWindow() {
-    // Create the browser window.
-    const mainWindow = new BrowserWindow({
-        width: 800,
-        height: 600,
-        webPreferences: {
-            preload: join(__dirname, '../preload/preload.js'),
-        },
-    });
+  // Create the browser window.
+  const mainWindow = new BrowserWindow({
+    width: 800,
+    height: 600,
+    webPreferences: {
+      preload: join(__dirname, "../preload/preload.js"),
+    },
+  });
 
-    // and load the index.html of the app.
-    mainWindow.loadURL(
-        isDev ?
-        'http://localhost:3000' :
-        join(__dirname, '../../index.html')
-    );
-    // Open the DevTools.
-    if (isDev) {
-        mainWindow.webContents.openDevTools();
-    }
+  // and load the index.html of the app.
+  mainWindow.loadURL(
+    isDev ? "http://localhost:3000" : join(__dirname, "../../index.html")
+  );
+  // Open the DevTools.
+  if (isDev) {
+    mainWindow.webContents.openDevTools();
+  }
 }
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
-    createWindow()
-    app.on('activate', function () {
-        // On macOS it's common to re-create a window in the app when the
-        // dock icon is clicked and there are no other windows open.
-        if (BrowserWindow.getAllWindows().length === 0) createWindow()
-    })
+  createWindow();
+  app.on("activate", function () {
+    // On macOS it's common to re-create a window in the app when the
+    // dock icon is clicked and there are no other windows open.
+    if (BrowserWindow.getAllWindows().length === 0) createWindow();
+  });
 });
 
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits
 // explicitly with Cmd + Q.
-app.on('window-all-closed', () => {
-    if (process.platform !== 'darwin') {
-        app.quit();
-    }
+app.on("window-all-closed", () => {
+  if (process.platform !== "darwin") {
+    app.quit();
+  }
 });
 ```
 
@@ -98,16 +95,16 @@ app.on('window-all-closed', () => {
 // src/electron/preload/preload.ts
 // All of the Node.js APIs are available in the preload process.
 // It has the same sandbox as a Chrome extension.
-window.addEventListener('DOMContentLoaded', () => {
-    const replaceText = (selector:any, text:any) => {
-      const element = document.getElementById(selector)
-      if (element) element.innerText = text
-    }
+window.addEventListener("DOMContentLoaded", () => {
+  const replaceText = (selector: any, text: any) => {
+    const element = document.getElementById(selector);
+    if (element) element.innerText = text;
+  };
 
-    for (const dependency of ['chrome', 'node', 'electron']) {
-      replaceText(`${dependency}-version`, process.versions[dependency])
-    }
-  })
+  for (const dependency of ["chrome", "node", "electron"]) {
+    replaceText(`${dependency}-version`, process.versions[dependency]);
+  }
+});
 ```
 
 ### 4. Edit `tsconfig.json`
@@ -137,20 +134,20 @@ window.addEventListener('DOMContentLoaded', () => {
 ```
 
 ### 5. Edit `vite.config.ts`
-  
-  ```ts {vite.config.ts}
-  import { defineConfig } from 'vite'
-  import vue from '@vitejs/plugin-vue'
-  // https://vitejs.dev/config/
-  export default defineConfig({
-    plugins: [vue()],
-    base: './' //add base path
-  })
-  ```
+
+```ts {vite.config.ts}
+import { defineConfig } from "vite";
+import vue from "@vitejs/plugin-vue";
+// https://vitejs.dev/config/
+export default defineConfig({
+  plugins: [vue()],
+  base: "./", //add base path
+});
+```
 
 ### 6. Edit `package.json`
 
-``` json
+```json
 {
   "name": "vite-vue3-electron-ts-template",
   "private": true,
@@ -175,22 +172,18 @@ window.addEventListener('DOMContentLoaded', () => {
       "buildResources": "assets",
       "output": "release/${version}"
     },
-    "files": [
-      "dist"
-    ],
+    "files": ["dist"],
     "mac": {
       "artifactName": "${productName}_${version}.${ext}",
-      "target": [
-        "dmg"
-      ]
+      "target": ["dmg"]
     },
     "win": {
-      "target": [{
-        "target": "nsis",
-        "arch": [
-          "x64"
-        ]
-      }],
+      "target": [
+        {
+          "target": "nsis",
+          "arch": ["x64"]
+        }
+      ],
       "artifactName": "${productName}_${version}.${ext}"
     },
     "nsis": {
@@ -217,21 +210,23 @@ window.addEventListener('DOMContentLoaded', () => {
 
 ## 7. Setup Main Process debug configuration: create `launch.json` to `.vscode` folder
 
-``` json
+```json
 {
-    "version": "0.2.0",
-    "configurations": [{
-        "name": "Debug Main Process",
-        "type": "node",
-        "request": "launch",
-        "cwd": "${workspaceFolder}",
-        "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron",
-        "windows": {
-            "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron.cmd"
-        },
-        "args": ["."],
-        "outputCapture": "std"
-    }]
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug Main Process",
+      "type": "node",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron",
+      "windows": {
+        "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron.cmd"
+      },
+      "args": ["."],
+      "outputCapture": "std"
+    }
+  ]
 }
 ```
 
@@ -240,13 +235,13 @@ window.addEventListener('DOMContentLoaded', () => {
 ### dev mode
 
 ```bash
-npm run app:dev  
+npm run app:dev
 ```
 
 ### preview mode
 
 ```bash
-npm run app:preview  
+npm run app:preview
 ```
 
 ### build app
@@ -259,4 +254,4 @@ npm run app:build
 
 1. Add a break point in the main process `src/electron/main/main.ts`.
 2. Open the `Run and Debug (Ctrl+Shift+D)` tool, and select `Debug Main Process`.
-*Note: Before using the debug tool to debug the main process, you should run the preview script `npm run app:preview` first to build the Vue app.*
+   _Note: Before using the debug tool to debug the main process, you should run the preview script `npm run app:preview` first to build the Vue app._
