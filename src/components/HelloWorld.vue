@@ -5,7 +5,11 @@ import { GeneFxDataService } from "../services/GeneFxDataService";
 defineProps<{ msg: string }>();
 
 const count = ref(0);
+let text = ref("");
 const increase = () => GeneFxDataService.test();
+const testFetch = async () => {
+  text.value = await GeneFxDataService.testFetch();
+};
 </script>
 
 <template>
@@ -14,6 +18,10 @@ const increase = () => GeneFxDataService.test();
   <button type="button" @click="count = increase()">
     count is: {{ count }}
   </button>
+  <button type="button" @click="count = testFetch()">Fetch</button>
+  <p>
+    {{ text }}
+  </p>
 </template>
 
 <style scoped>

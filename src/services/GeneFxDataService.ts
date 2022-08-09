@@ -4,4 +4,9 @@ export class GeneFxDataService {
   static test() {
     return this.num++;
   }
+
+  static async testFetch() {
+    const res = await fetch("https://www.genefx.com/");
+    return res.text();
+  }
 }
